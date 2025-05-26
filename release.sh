@@ -39,7 +39,7 @@ EOS
 #dos2unix pubspec.yaml
 #dos2unix CHANGELOG.md
 
-exit 0
+#exit 0
 
 dart pub publish --force
 
