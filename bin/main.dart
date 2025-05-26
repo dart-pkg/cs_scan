@@ -6,7 +6,7 @@ import 'package:std/misc.dart';
 //import 'package:std/std.dart' as std_std;
 
 Set<String> $sourceSet = {};
-List<String> $sourceList = [];
+//List<String> $sourceList = [];
 Set<String> $refSet = {};
 Set<String> $embedSet = {};
 
