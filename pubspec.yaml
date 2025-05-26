@@ -1,0 +1,15 @@
+name: cs_scan
+description: cs_scan project
+version: 0.0.1
+homepage: 
+repository: https://github.com/dart-pkg/cs_scan
+environment:
+  sdk: ^3.7.2
+# executables:
+#  cs-scan: main
+dev_dependencies:
+  test: ^1.26.2
+  lints: ^6.0.0
+dependencies:
+  debug_output: ^2025.504.1731
+  std: ^2025.526.2028
