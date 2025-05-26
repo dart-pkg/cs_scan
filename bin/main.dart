@@ -7,6 +7,7 @@ import 'package:std/misc.dart';
 
 Set<String> $sourceSet = {};
 List<String> $sourceList = [];
+Set<String> $refSet = {};
 
 void scanSource(String path) {
   path = pathExpand(path);
@@ -14,14 +15,20 @@ void scanSource(String path) {
   String dir = pathDirectoryName(path);
   pushd(dir);
   List<String> lines = readFileLines(path);
-  final reg = RegExp(r'^//css_inc[ ]+(.+)[ ]*');
+  final regInc = RegExp(r'^//css_inc[ ]+(.+)[ ]*');
+  final regRef = RegExp(r'^//css_ref[ ]+(.+)[ ]*');
   for (int i = 0; i < lines.length; i++) {
     String line = lines[i];
-    RegExpMatch? match = reg.firstMatch(line);
-    if (match != null) {
-      String src = pathExpand(match.group(1)!);
+    RegExpMatch? matchInc = regInc.firstMatch(line);
+    if (matchInc != null) {
+      String src = pathExpand(matchInc.group(1)!);
       $sourceSet.add(src);
       scanSource(src);
+    }
+    RegExpMatch? matchRef = regRef.firstMatch(line);
+    if (matchRef != null) {
+      String src = matchRef.group(1)!;
+      $refSet.add(src);
     }
   }
   popd();
@@ -39,4 +46,5 @@ void main() {
     String rel = pathRelative($sourceList[i], from: mainDir);
     echo(rel, title: r'rel');
   }
+  echo($refSet);
 }
