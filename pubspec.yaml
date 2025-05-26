@@ -12,4 +12,4 @@ dev_dependencies:
   lints: ^6.0.0
 dependencies:
   debug_output: ^2025.504.1731
-  std: ^2025.526.2028
+  std: ^2025.526.2206
