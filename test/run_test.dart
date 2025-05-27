@@ -15,6 +15,8 @@ void main() {
           '''{D:/home11/cs-cmd/Test.Main/Test.Main.cs, D:/home11/cs-cmd/Test.Main/Test.Main.api.cs, D:/home11/cs-cmd/Test.Main/lib/lib.cs, D:/home11/cs-cmd/Test.Main/lib/lib.Add3.cs}''',
         ),
       );
+      result = echo(csScan.$pkgSet);
+      expect(result, equals('''{EasyObject, Global.Sys}'''));
       result = echo(csScan.$refSet);
       expect(result, equals('''{Test.Lib.exe}'''));
       result = echo(csScan.$embedSet);

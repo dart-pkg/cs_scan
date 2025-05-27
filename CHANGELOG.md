@@ -32,3 +32,14 @@
 -version: 2025.527.1617
 +version: 2025.527.1636
 ```
+
+## 2025.527.1755
+
+- Modified CsScan
+
+```
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+-version: 2025.527.1636
++version: 2025.527.1755
+```

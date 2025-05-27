@@ -7,6 +7,7 @@ class CsScan {
   late final String _path;
   //late final String _dir;
   Set<String> $sourceSet = {};
+  Set<String> $pkgSet = {};
   Set<String> $refSet = {};
   Set<String> $embedSet = {};
   CsScan(String path) {
@@ -25,11 +26,16 @@ class CsScan {
     pushd(dir);
     List<String> lines = readFileLines(path);
     final regInc = RegExp(r'^//css_inc[ ]+(.+)[ ]*');
+    final regPkg = RegExp(r'^//css_nuget[ ]+(.+)[ ]*');
     final regRef = RegExp(r'^//css_ref[ ]+(.+)[ ]*');
     final regEmbed = RegExp(r'^//css_embed[ ]+(.+)[ ]*');
     for (int i = 0; i < lines.length; i++) {
       String line = lines[i];
-      RegExpMatch? matchInc = regInc.firstMatch(line);
+      RegExpMatch? matchPkg = regPkg.firstMatch(line);
+      if (matchPkg != null) {
+        String src = matchPkg.group(1)!;
+        $pkgSet.add(src);
+      }
       RegExpMatch? matchRef = regRef.firstMatch(line);
       if (matchRef != null) {
         String src = matchRef.group(1)!;
@@ -42,6 +48,7 @@ class CsScan {
         //$embedSet.add(rel);
         $embedSet.add(src);
       }
+      RegExpMatch? matchInc = regInc.firstMatch(line);
       if (matchInc != null) {
         String src = pathExpand(matchInc.group(1)!);
         //String rel = pathRelative(src, from: _dir);
@@ -57,6 +64,7 @@ class CsScan {
 void main() {
   var csScan = CsScan('~/cs-cmd/Test.Main/Test.Main.cs');
   echo(csScan.$sourceSet);
+  echo(csScan.$pkgSet);
   echo(csScan.$refSet);
   echo(csScan.$embedSet);
 }
