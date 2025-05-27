@@ -29,12 +29,6 @@ class CsScan {
     for (int i = 0; i < lines.length; i++) {
       String line = lines[i];
       RegExpMatch? matchInc = regInc.firstMatch(line);
-      if (matchInc != null) {
-        String src = pathExpand(matchInc.group(1)!);
-        String rel = pathRelative(src, from: _dir);
-        $sourceSet.add(rel);
-        scanSource(src);
-      }
       RegExpMatch? matchRef = regRef.firstMatch(line);
       if (matchRef != null) {
         String src = matchRef.group(1)!;
@@ -45,6 +39,12 @@ class CsScan {
         String src = pathExpand(matchEmbed.group(1)!);
         String rel = pathRelative(src);
         $embedSet.add(rel);
+      }
+      if (matchInc != null) {
+        String src = pathExpand(matchInc.group(1)!);
+        String rel = pathRelative(src, from: _dir);
+        $sourceSet.add(rel);
+        scanSource(src);
       }
     }
     popd();
