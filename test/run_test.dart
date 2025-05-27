@@ -12,13 +12,13 @@ void main() {
       expect(
         result,
         equals(
-          '''{Test.Main.cs, Test.Main.api.cs, lib/lib.cs, lib/lib.Add3.cs}''',
+          '''{D:/home11/cs-cmd/Test.Main/Test.Main.cs, D:/home11/cs-cmd/Test.Main/Test.Main.api.cs, D:/home11/cs-cmd/Test.Main/lib/lib.cs, D:/home11/cs-cmd/Test.Main/lib/lib.Add3.cs}''',
         ),
       );
       result = echo(csScan.$refSet);
       expect(result, equals('''{Test.Lib.exe}'''));
       result = echo(csScan.$embedSet);
-      expect(result, equals('''{test.txt}'''));
+      expect(result, equals('''{D:/home11/cs-cmd/Test.Main/test.txt}'''));
     });
   });
 }

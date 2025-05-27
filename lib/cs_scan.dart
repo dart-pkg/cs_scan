@@ -5,13 +5,13 @@ import 'package:std/misc.dart';
 
 class CsScan {
   late final String _path;
-  late final String _dir;
+  //late final String _dir;
   Set<String> $sourceSet = {};
   Set<String> $refSet = {};
   Set<String> $embedSet = {};
   CsScan(String path) {
     _path = pathExpand(path);
-    _dir = pathDirectoryName(_path);
+    //_dir = pathDirectoryName(_path);
     scanSource(_path);
   }
   void scanSource(String path) {
@@ -19,7 +19,8 @@ class CsScan {
     if (!fileExists(path)) {
       return;
     }
-    $sourceSet.add(pathRelative(path, from: _dir));
+    //$sourceSet.add(pathRelative(path, from: _dir));
+    $sourceSet.add(path);
     String dir = pathDirectoryName(path);
     pushd(dir);
     List<String> lines = readFileLines(path);
@@ -37,13 +38,15 @@ class CsScan {
       RegExpMatch? matchEmbed = regEmbed.firstMatch(line);
       if (matchEmbed != null) {
         String src = pathExpand(matchEmbed.group(1)!);
-        String rel = pathRelative(src);
-        $embedSet.add(rel);
+        //rel = pathRelative(src);
+        //$embedSet.add(rel);
+        $embedSet.add(src);
       }
       if (matchInc != null) {
         String src = pathExpand(matchInc.group(1)!);
-        String rel = pathRelative(src, from: _dir);
-        $sourceSet.add(rel);
+        //String rel = pathRelative(src, from: _dir);
+        //$sourceSet.add(rel);
+        $sourceSet.add(src);
         scanSource(src);
       }
     }
