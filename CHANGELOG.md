@@ -43,3 +43,17 @@
 -version: 2025.527.1636
 +version: 2025.527.1755
 ```
+
+## 2025.528.1819
+
+- Introduced CsNuget
+
+```
+--- a/pubspec.yaml
++++ b/pubspec.yaml
+-version: 2025.527.1755
++version: 2025.528.1819
+-  std: ^2025.527.154
++  std: ^2025.527.1952
++  text_serializer: ^2025.502.1757
+```

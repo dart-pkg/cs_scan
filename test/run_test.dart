@@ -16,7 +16,12 @@ void main() {
         ),
       );
       result = echo(csScan.$pkgSet);
-      expect(result, equals('''{EasyObject, Global.Sys}'''));
+      expect(
+        result,
+        equals(
+          '''{{"name":"EasyObject","version":"*"}, {"name":"Newtonsoft.Json","version":"13.0.3"}, {"name":"Global.Sys","version":"*"}}''',
+        ),
+      );
       result = echo(csScan.$refSet);
       expect(result, equals('''{Test.Lib.exe}'''));
       result = echo(csScan.$embedSet);

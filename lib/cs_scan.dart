@@ -2,19 +2,45 @@ library;
 
 import 'package:debug_output/debug_output.dart';
 import 'package:std/misc.dart';
+import 'package:text_serializer/text_serializer.dart';
+
+class CsNuget {
+  final String $name;
+  final String $version;
+
+  CsNuget(this.$name, this.$version);
+
+  @override
+  bool operator ==(Object other) {
+    if (other is! CsNuget) return false;
+    CsNuget $other = other;
+    return $name == $other.$name && $version == $other.$version;
+  }
+
+  @override
+  String toString() {
+    return toJson({'name': $name, 'version': $version});
+  }
+
+  @override
+  int get hashCode => $name.hashCode ^ $version.hashCode;
+}
 
 class CsScan {
   late final String _path;
+
   //late final String _dir;
   Set<String> $sourceSet = {};
-  Set<String> $pkgSet = {};
+  Set<CsNuget> $pkgSet = {};
   Set<String> $refSet = {};
   Set<String> $embedSet = {};
+
   CsScan(String path) {
     _path = pathExpand(path);
     //_dir = pathDirectoryName(_path);
     scanSource(_path);
   }
+
   void scanSource(String path) {
     path = pathExpand(path);
     if (!fileExists(path)) {
@@ -34,7 +60,14 @@ class CsScan {
       RegExpMatch? matchPkg = regPkg.firstMatch(line);
       if (matchPkg != null) {
         String src = matchPkg.group(1)!;
-        $pkgSet.add(src);
+        CsNuget nuget;
+        if (src.contains('@')) {
+          List<String> split = src.split('@');
+          nuget = CsNuget(split[0], split[1]);
+        } else {
+          nuget = CsNuget(src, '*');
+        }
+        $pkgSet.add(nuget);
       }
       RegExpMatch? matchRef = regRef.firstMatch(line);
       if (matchRef != null) {
